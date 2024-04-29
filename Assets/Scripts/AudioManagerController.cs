@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 public class AudioManagerController : MonoBehaviour
 {
+    public static AudioManagerController Instance { get; private set; }
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider musicConfiguration;
     [SerializeField] private Slider sfxConfiguration;
@@ -13,6 +14,17 @@ public class AudioManagerController : MonoBehaviour
     [SerializeField] private AudioClip[] sfxClips;
     [SerializeField] private AudioSettings audioSettings;
     [SerializeField] private bool load_volume_settings;
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     private void Start()
     {
         if (load_volume_settings == true)
